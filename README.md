@@ -23,3 +23,45 @@ Responsive design for both desktop and mobile
 ✅ Responsive layout with on-screen controls appearing on mobile devices
 ✅ Smooth animations with constant game speed
 ✅ Lightweight: only one HTML file containing all code
+
+
+
+# Snake Game
+
+A classic Snake game implemented entirely in HTML. This project brings the nostalgic arcade snake gameplay experience to your web browser with a simple, lightweight design.
+
+## Features
+
+- Pure HTML implementation (easy to run in any browser)
+- Classic snake gameplay mechanics
+- Responsive design, playable on desktop and mobile browsers
+- Easy to customize and extend
+
+## Getting Started
+
+### Prerequisites
+
+- Any modern web browser (Chrome, Firefox, Edge, Safari, etc.)
+
+### How to Play
+
+1. Clone or download this repository:
+    ```bash
+    git clone https://github.com/Satya136-dvsn/Snake-Game.git
+    ```
+2. Open the `index.html` file in your browser.
+3. Use the arrow keys on your keyboard to control the snake's direction.
+4. Eat the food to grow your snake, but avoid running into the walls or your own tail!
+
+## File Structure
+
+- `index.html` – Main HTML file containing the Snake game
+
+## Contributing
+
+Contributions are welcome! Feel free to fork the repository, improve the game, or submit pull requests.
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
+
