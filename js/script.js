@@ -31,7 +31,10 @@ let highScore = localStorage.getItem("high-score") || 0;
 highScoreElement.innerText = `High Score: ${highScore}`;
 
 /**
- * Generates a random position for the food.
+ * @function updateFoodPosition
+ * @description Generates a random position for the food within the canvas grid.
+ * The position is calculated based on the canvas dimensions and grid size.
+ * The generated coordinates are assigned to the 'food' object.
  */
 const updateFoodPosition = () => {
     food = {
@@ -41,7 +44,10 @@ const updateFoodPosition = () => {
 };
 
 /**
- * Draws the snake, food, and grid on the canvas.
+ * @function draw
+ * @description Renders the game elements (snake and food) on the canvas.
+ * It clears the canvas before drawing to ensure a clean frame for each render.
+ * The snake and food are drawn based on their current positions and the grid size.
  */
 const draw = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -58,7 +64,10 @@ const draw = () => {
 };
 
 /**
- * Updates the game state.
+ * @function update
+ * @description Updates the game state on each frame.
+ * This includes moving the snake, checking for collisions (food, wall, self),
+ * and updating the score. The game loop is terminated if the game is over.
  */
 const update = () => {
     if (gameOver) return;
@@ -116,7 +125,10 @@ const update = () => {
 };
 
 /**
- * Ends the game.
+ * @function endGame
+ * @description Handles the game over state.
+ * It stops the game loop, plays a sound, and displays the game over screen
+ * with the final score and high score.
  */
 const endGame = () => {
     gameOver = true;
@@ -128,7 +140,10 @@ const endGame = () => {
 };
 
 /**
- * Toggles the game's paused state.
+ * @function togglePause
+ * @description Toggles the paused state of the game.
+ * When paused, the game loop is cleared. When resumed, the game loop is restarted.
+ * The game must be started and not over for the pause to function.
  */
 const togglePause = () => {
     if (!gameStarted || gameOver) return;
@@ -144,8 +159,12 @@ const togglePause = () => {
 };
 
 /**
- * Changes the snake's direction.
- * @param {KeyboardEvent} e - The key press event.
+ * @function changeDirection
+ * @description Changes the direction of the snake based on user input.
+ * It ensures the snake cannot reverse its direction.
+ * Also handles the 'P' key for pausing the game.
+ * @param {object} e - The event object, containing the key pressed.
+ * @param {string} e.key - The key that was pressed.
  */
 const changeDirection = e => {
     const key = e.key;
@@ -165,7 +184,9 @@ const changeDirection = e => {
 };
 
 /**
- * Starts the game.
+ * @function startGame
+ * @description Starts the game.
+ * It hides the start screen, initializes the food position, and begins the game loop.
  */
 const startGame = () => {
     gameStarted = true;
@@ -178,7 +199,9 @@ const startGame = () => {
 };
 
 /**
- * Resets the game.
+ * @function resetGame
+ * @description Resets the game by reloading the page.
+ * This effectively restarts the game from its initial state.
  */
 const resetGame = () => {
     location.reload();
