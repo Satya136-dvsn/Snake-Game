@@ -1,91 +1,161 @@
 # 🐍 Snake Game
 
-A modern, visually stunning implementation of the classic Snake game built with HTML Canvas and pure JavaScript. Features a sleek dark theme, smooth animations, and progressive difficulty.
+<div align="center">
 
-![Snake Game Preview](https://img.shields.io/badge/Status-Ready%20to%20Play-brightgreen)
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
-![GitHub Pages](https://img.shields.io/badge/Deployed%20on-GitHub%20Pages-blue?logo=github)
+[![Live Demo](https://img.shields.io/badge/🎮_Play_Now-Live_Demo-00d4aa?style=for-the-badge)](https://satya136-dvsn.github.io/Snake-Game/)
+[![GitHub Pages](https://img.shields.io/badge/Deployed_on-GitHub_Pages-222222?style=for-the-badge&logo=github)](https://satya136-dvsn.github.io/Snake-Game/)
 
-## 🎮 [Play Now!](https://satya136-dvsn.github.io/Snake-Game/)
+**A modern, feature-rich Snake game built with vanilla JavaScript and HTML5 Canvas**
+
+*Demonstrating clean code architecture, game loop optimization, and responsive design principles*
+
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript_ES6+-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+![Canvas API](https://img.shields.io/badge/Canvas_API-FF6B6B?style=flat-square)
+
+</div>
+
+---
+
+## 📋 Table of Contents
+
+- [Overview](#-overview)
+- [Live Demo](#-live-demo)
+- [Features](#-features)
+- [Technical Highlights](#-technical-highlights)
+- [Getting Started](#-getting-started)
+- [Project Structure](#-project-structure)
+- [Game Controls](#-game-controls)
+- [Skills Demonstrated](#-skills-demonstrated)
+
+---
+
+## 🎯 Overview
+
+A polished recreation of the classic Snake arcade game, showcasing modern web development practices. This project emphasizes **clean code architecture**, **performance optimization**, and **user experience design** — built entirely without frameworks to demonstrate core JavaScript proficiency.
+
+---
+
+## 🚀 Live Demo
+
+### **[▶️ Play the Game](https://satya136-dvsn.github.io/Snake-Game/)**
+
+---
 
 ## ✨ Features
 
-- **🎨 Modern Dark Theme** - Sleek glassmorphism design with vibrant gradient accents
-- **🎮 Difficulty Levels** - Choose between Easy, Medium, or Hard modes
-- **⚡ Progressive Speed** - Game speeds up as you score higher
-- **🔊 Sound Effects** - Satisfying audio feedback for eating and game over
-- **💾 Persistent High Score** - Your best score is saved in local storage
-- **📱 Mobile Controls** - Fully playable on touch devices
-- **⏸️ Pause/Resume** - Press 'P' to pause anytime
-- **🌟 Visual Effects** - Gradient snake, pulsing food, and glowing effects
+| Feature | Description |
+|---------|-------------|
+| **🎨 Modern UI** | Sleek dark theme with glassmorphism effects, gradient accents, and smooth animations |
+| **⚡ Dynamic Difficulty** | Three difficulty levels (Easy/Medium/Hard) with progressive speed scaling |
+| **💾 Persistent Storage** | High scores saved to localStorage for return visits |
+| **📱 Responsive Design** | Fully playable on desktop and mobile with touch controls |
+| **🔊 Audio Feedback** | Sound effects for food collection and game over events |
+| **⏸️ Pause System** | Pause/resume functionality with visual overlay |
+| **🎮 Multiple Input Methods** | Arrow keys, WASD, and touch controls supported |
 
-## 🎯 How to Play
+---
 
-| Control | Action |
-|---------|--------|
-| `↑` `↓` `←` `→` | Move the snake |
-| `W` `A` `S` `D` | Alternative movement keys |
-| `P` | Pause/Resume game |
-| Touch controls | Mobile support |
+## 🔧 Technical Highlights
 
-**Goal:** Eat the red food to grow longer and score points. Avoid hitting the walls or yourself!
+### Architecture & Design Patterns
 
-## 🚀 Quick Start
+- **Game Loop Optimization** — Uses `setTimeout` with dynamic intervals for frame-rate independent gameplay
+- **State Machine** — Clean separation of game states (menu, playing, paused, game over)
+- **Collision Detection** — Efficient boundary and self-collision checking
+- **Input Buffering** — Direction queue prevents 180° turns that would cause instant death
 
-1. **Clone the repository:**
+### Code Quality
 
-   ```bash
-   git clone https://github.com/Satya136-dvsn/Snake-Game.git
-   ```
+```javascript
+// Example: Clean, modular function structure
+const update = () => {
+    if (gameOver || paused) return;
+    
+    direction = nextDirection;  // Input buffer pattern
+    const head = calculateNewHead();
+    
+    if (checkCollision(head)) return endGame();
+    
+    snake.unshift(head);
+    handleFoodCollision(head);
+};
+```
 
-2. **Open the game:**
+### Performance
 
-   ```bash
-   cd Snake-Game
-   ```
+- Minimal DOM manipulation — all rendering via Canvas API
+- Efficient snake movement using array operations (`unshift`/`pop`)
+- Responsive design without CSS frameworks
 
-   Open `index.html` in your browser, or use a live server.
+---
 
-3. **Play!** Select your difficulty and click "Start Game"
+## 🏁 Getting Started
 
-## 🛠️ Technologies
+### Prerequisites
 
-- **HTML5 Canvas** - Smooth 2D rendering
-- **CSS3** - Modern styling with glassmorphism and animations
-- **Vanilla JavaScript (ES6+)** - Clean, modular game logic
-- **Web Audio API** - Sound effects
+- Any modern web browser (Chrome, Firefox, Safari, Edge)
+
+### Local Development
+
+```bash
+# Clone the repository
+git clone https://github.com/Satya136-dvsn/Snake-Game.git
+
+# Navigate to project
+cd Snake-Game
+
+# Open in browser (or use Live Server)
+start index.html
+```
+
+No build tools or dependencies required — pure vanilla JavaScript.
+
+---
 
 ## 📁 Project Structure
 
 ```
 Snake-Game/
-├── index.html          # Main HTML file
+├── index.html          # Entry point with semantic HTML5
 ├── css/
-│   └── style.css       # Styling and animations
+│   └── style.css       # Modern CSS with custom properties
 ├── js/
-│   └── script.js       # Game logic
+│   └── script.js       # Game logic (~400 lines, well-documented)
 ├── assets/
-│   ├── eat.wav         # Eating sound effect
-│   └── game-over.wav   # Game over sound effect
-└── README.md           # Documentation
+│   ├── eat.wav         # Food collection sound
+│   └── game-over.wav   # Game over sound
+└── README.md
 ```
 
-## 🎮 Game Mechanics
+---
 
-- **Food Spawning** - Food never spawns on the snake's body
-- **Collision Detection** - Wall and self-collision ends the game
-- **Direction Lock** - Prevents 180° turns that would cause instant death
-- **Dynamic Speed** - Base speed increases by 5ms every 5 points
+## 🎮 Game Controls
 
-## 💡 Future Ideas
+| Input | Action |
+|-------|--------|
+| `↑` `↓` `←` `→` | Move snake |
+| `W` `A` `S` `D` | Alternative movement |
+| `P` | Pause/Resume |
+| Touch/Swipe | Mobile controls |
 
-- [ ] Power-ups (speed boost, invincibility, score multiplier)
-- [ ] Multiple game modes (Time Attack, Survival, Zen)
-- [ ] Global leaderboard
-- [ ] Custom themes and snake skins
-- [ ] Obstacles and maze modes
+---
+
+## 💡 Skills Demonstrated
+
+This project showcases proficiency in:
+
+- **JavaScript (ES6+)** — Arrow functions, template literals, destructuring, modules
+- **HTML5 Canvas API** — 2D rendering, animations, and game graphics
+- **CSS3** — Flexbox, Grid, custom properties, animations, glassmorphism
+- **Game Development** — Game loops, collision detection, state management
+- **Web Audio API** — Sound effect integration
+- **Responsive Design** — Mobile-first approach with touch support
+- **Local Storage API** — Client-side data persistence
+- **Git/GitHub** — Version control and deployment via GitHub Pages
+
+---
 
 ## 📄 License
 
@@ -93,4 +163,10 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-<p align="center">Made with ❤️ using pure JavaScript</p>
+<div align="center">
+
+**Built with ❤️ by [Satya](https://github.com/Satya136-dvsn)**
+
+*If you enjoyed this project, consider giving it a ⭐*
+
+</div>
