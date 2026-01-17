@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A modern Snake Game with smooth graphics, difficulty levels, and high score tracking. Play now!">
+    <meta name="keywords" content="snake game, arcade game, browser game, javascript game">
+    <meta name="author" content="Satya">
+    <title>Snake Game | Classic Arcade</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+  </head>
+  <body>
+    <div class="game-container">
+      <div class="game-details">
+        <span class="score">Score: 0</span>
+        <span class="high-score">High Score: 0</span>
+      </div>
+      <canvas class="play-board" width="600" height="600"></canvas>
+      <div class="controls">
+        <i data-key="ArrowLeft" class="fa-solid fa-arrow-left-long"></i>
+        <i data-key="ArrowUp" class="fa-solid fa-arrow-up-long"></i>
+        <i data-key="ArrowRight" class="fa-solid fa-arrow-right-long"></i>
+        <i data-key="ArrowDown" class="fa-solid fa-arrow-down-long"></i>
+      </div>
+
+      <!-- Pause Overlay -->
+      <div class="pause-overlay">
+        <h2>PAUSED</h2>
+        <p>Press 'P' to resume</p>
+      </div>
+    </div>
+
+    <!-- Start Screen -->
+    <div class="start-screen">
+      <h1>🐍 Snake Game</h1>
+      <p>Use arrow keys or WASD to move. Press 'P' to pause.</p>
+      <div class="difficulty-selector">
+        <button class="difficulty-btn" data-speed="150">Easy</button>
+        <button class="difficulty-btn active" data-speed="100">Medium</button>
+        <button class="difficulty-btn" data-speed="70">Hard</button>
+      </div>
+      <button class="start-button">Start Game</button>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div class="game-over-screen">
+      <h2>💀 Game Over</h2>
+      <p>Final Score: <span class="final-score">0</span></p>
+      <p>High Score: <span class="high-score-display">0</span></p>
+      <button class="play-again-button">Play Again</button>
+    </div>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
