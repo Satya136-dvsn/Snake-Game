@@ -71,7 +71,7 @@ const updateFoodPosition = () => {
         newX = Math.floor(Math.random() * GRID_COUNT);
         newY = Math.floor(Math.random() * GRID_COUNT);
     } while (isOnSnake(newX, newY));
-    
+
     food = { x: newX, y: newY };
 };
 
@@ -94,14 +94,14 @@ const getDynamicSpeed = () => {
 const drawGrid = () => {
     ctx.strokeStyle = "rgba(255, 255, 255, 0.03)";
     ctx.lineWidth = 1;
-    
+
     for (let i = 0; i <= GRID_COUNT; i++) {
         // Vertical lines
         ctx.beginPath();
         ctx.moveTo(i * GRID_SIZE, 0);
         ctx.lineTo(i * GRID_SIZE, canvas.height);
         ctx.stroke();
-        
+
         // Horizontal lines
         ctx.beginPath();
         ctx.moveTo(0, i * GRID_SIZE);
@@ -129,17 +129,17 @@ const drawSnake = () => {
         const r = Math.round(0 + (0 - 0) * ratio);
         const g = Math.round(255 - (255 - 170) * ratio);
         const b = Math.round(136 + (85 - 136) * ratio);
-        
+
         ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
-        
+
         const padding = 1;
         const size = GRID_SIZE - padding * 2;
         const x = segment.x * GRID_SIZE + padding;
         const y = segment.y * GRID_SIZE + padding;
-        
+
         // Draw rounded segment
         drawRoundedRect(x, y, size, size, 4);
-        
+
         // Add glow effect to head
         if (index === 0) {
             ctx.shadowColor = "#00ff88";
@@ -156,16 +156,16 @@ const drawSnake = () => {
 const drawFood = () => {
     const time = Date.now() / 200;
     const pulse = Math.sin(time) * 2;
-    
+
     const size = GRID_SIZE - 4 + pulse;
     const offset = (GRID_SIZE - size) / 2;
     const x = food.x * GRID_SIZE + offset;
     const y = food.y * GRID_SIZE + offset;
-    
+
     // Glow effect
     ctx.shadowColor = "#ff6b6b";
     ctx.shadowBlur = 15 + pulse * 2;
-    
+
     ctx.fillStyle = "#ff6b6b";
     ctx.beginPath();
     ctx.arc(
@@ -176,7 +176,7 @@ const drawFood = () => {
         Math.PI * 2
     );
     ctx.fill();
-    
+
     ctx.shadowBlur = 0;
 };
 
@@ -186,10 +186,10 @@ const drawFood = () => {
 const draw = () => {
     // Clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     // Draw background grid
     drawGrid();
-    
+
     // Draw game elements
     drawFood();
     drawSnake();
@@ -204,10 +204,10 @@ const draw = () => {
  */
 const update = () => {
     if (gameOver || paused) return;
-    
+
     // Apply the next direction (prevents rapid reversal)
     direction = nextDirection;
-    
+
     // Calculate new head position
     const head = { x: snake[0].x, y: snake[0].y };
     switch (direction) {
@@ -216,44 +216,41 @@ const update = () => {
         case "left": head.x--; break;
         case "right": head.x++; break;
     }
-    
-    // Add new head
+
+    // Check for wall collision BEFORE adding head
+    if (head.x < 0 || head.x >= GRID_COUNT || head.y < 0 || head.y >= GRID_COUNT) {
+        endGame();
+        return;
+    }
+
+    // Check for self collision BEFORE adding head
+    for (let i = 0; i < snake.length; i++) {
+        if (head.x === snake[i].x && head.y === snake[i].y) {
+            endGame();
+            return;
+        }
+    }
+
+    // Add new head (only if no collision)
     snake.unshift(head);
-    
+
     // Check for food collision
     if (head.x === food.x && head.y === food.y) {
         score++;
         scoreElement.innerText = `Score: ${score}`;
-        
+
         if (score > highScore) {
             highScore = score;
             highScoreElement.innerText = `High Score: ${highScore}`;
             localStorage.setItem("high-score", highScore);
         }
-        
+
         eatSound.currentTime = 0;
-        eatSound.play().catch(() => {}); // Ignore autoplay errors
+        eatSound.play().catch(() => { }); // Ignore autoplay errors
         updateFoodPosition();
-        
-        // Increase speed dynamically
-        clearTimeout(gameLoopId);
-        gameLoop();
+        // Snake grows - don't pop tail
     } else {
         snake.pop();
-    }
-    
-    // Check for wall collision
-    if (head.x < 0 || head.x >= GRID_COUNT || head.y < 0 || head.y >= GRID_COUNT) {
-        endGame();
-        return;
-    }
-    
-    // Check for self collision (skip head)
-    for (let i = 1; i < snake.length; i++) {
-        if (head.x === snake[i].x && head.y === snake[i].y) {
-            endGame();
-            return;
-        }
     }
 };
 
@@ -261,9 +258,9 @@ const update = () => {
  * Main game loop using setTimeout for dynamic speed
  */
 const gameLoop = () => {
-    update();
     draw();
-    
+    update();
+
     if (!gameOver && !paused) {
         gameLoopId = setTimeout(gameLoop, getDynamicSpeed());
     }
@@ -275,9 +272,9 @@ const gameLoop = () => {
 const endGame = () => {
     gameOver = true;
     clearTimeout(gameLoopId);
-    
-    gameOverSound.play().catch(() => {});
-    
+
+    gameOverSound.play().catch(() => { });
+
     gameOverScreen.style.display = "flex";
     document.querySelector(".final-score").innerText = score;
     document.querySelector(".high-score-display").innerText = highScore;
@@ -288,9 +285,9 @@ const endGame = () => {
  */
 const togglePause = () => {
     if (!gameStarted || gameOver) return;
-    
+
     paused = !paused;
-    
+
     if (paused) {
         clearTimeout(gameLoopId);
         pauseOverlay.classList.add("show");
@@ -309,16 +306,16 @@ const togglePause = () => {
  */
 const changeDirection = (e) => {
     const key = e.key || e;
-    
+
     // Handle pause
     if (key === "p" || key === "P") {
         togglePause();
         return;
     }
-    
+
     // Don't change direction if paused or game over
     if (paused || gameOver) return;
-    
+
     // Map keys to directions with reversal prevention
     if ((key === "ArrowUp" || key === "w" || key === "W") && direction !== "down") {
         nextDirection = "up";
@@ -347,16 +344,21 @@ const startGame = () => {
     gameOver = false;
     gameStarted = true;
     paused = false;
-    
+
     // Update UI
     scoreElement.innerText = `Score: ${score}`;
     startScreen.style.display = "none";
     gameOverScreen.style.display = "none";
     pauseOverlay.classList.remove("show");
-    
-    // Initialize food and start game
+
+    // Initialize food
     updateFoodPosition();
-    gameLoop();
+
+    // Draw initial state first
+    draw();
+
+    // Start game loop with a small delay
+    gameLoopId = setTimeout(gameLoop, getDynamicSpeed());
 };
 
 /**
@@ -394,7 +396,7 @@ difficultyButtons.forEach(btn => {
         // Update active state
         difficultyButtons.forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
-        
+
         // Set speed
         currentSpeed = parseInt(btn.dataset.speed);
     });
